@@ -15,40 +15,16 @@ function test_prwd()
     dim = 2;
     reg = 0.2; % regularization
     
-    
     % histograms
     a = (1. / n) * ones(n,1);
     b = (1. / n) * ones(n,1);
-    
-    savedir = './results/';
-    
-    %% First example
+        
     % First measure : uniform on the hypercube between [-1, 1]
     X = -1 + 2*rand(n,d);
     % Second measure : fragmentation
     Y = -1 + 2*rand(n,d);
     temp = cat(1, ones(dim, 1), zeros(d - dim, 1));
     Y = Y + 2 * sign(Y) * temp;
-    %}
-
-    %% Second example
-    %{
-    noise_level = 1;
-    mean_1 = 0 .* randn(d,1);
-    mean_2 = 0 .* randn(d,1);
-
-    cov_1 = randn(d, dim);
-    cov_1 = cov_1 * cov_1';
-    cov_2 = randn(d, dim);
-    cov_2 = cov_2 * cov_2';
-
-    % Draw measures
-    X = mvnrnd(mean_1,cov_1,n);
-    Y = mvnrnd(mean_2,cov_2,n);
-
-    % Add noise
-    X = X + noise_level * randn(n, d);
-    Y = Y + noise_level * randn(n, d);
     %}
 
     %%
@@ -116,7 +92,7 @@ function test_prwd()
 
     end
     %checkgradient(problem); %ok
-    %checkhessian(problem);
+    %checkhessian(problem); %ok up to numerical errors
     %keyboard;
 
     xy0 = problem.M.rand();
@@ -179,9 +155,7 @@ function test_prwd()
     semilogy(gda_iter(1:10:end), gda_gradnorm(1:10:end), '-*', 'color', colors{2}, 'LineWidth',lw); hold on;
     semilogy(rhgsdf_iter(1:10:end), rhgsdf_gradnorm(1:10:end), '-x', 'color', colors{6}, 'LineWidth',lw); hold on;
     semilogy(rhgcon_iter(1:10:end), rhgcon_gradnorm(1:10:end), '-+', 'color', colors{3}, 'LineWidth',lw); hold on;
-    %semilogy([info_rhg_sd.iter], [info_rhg_sd.gradnormf], '-s', 'color', colors{4}, 'LineWidth',lw); hold on;
     semilogy(rhgcg_iter(1:10:end), rhgcg_gradnorm(1:10:end), '-d', 'color', colors{8}, 'LineWidth',lw); hold on;
-    %semilogy([info_rhg_tr.iter], [info_rhg_tr.gradnormf], '-^', 'color', colors{7}, 'LineWidth',lw); hold on;
     hold off;
     ax = gca;
     lg = legend('RGDA', 'RHM-SD-F', 'RHM-CON', 'RHM-CG');
@@ -203,8 +177,5 @@ function test_prwd()
     xlim
     xlabel(ax,'Time (s)','FontSize',22);
     ylabel(ax,'Gradnorm','FontSize',22);
-    
-    pdf_print_code(h1, [savedir, 'stief_prwd_', 'iter']);
-    pdf_print_code(h2, [savedir, 'stief_prwd_', 'time']);
 
 end
