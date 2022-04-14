@@ -5,10 +5,7 @@ function test_spd_logdet()
     clc
     rng(99);
 
-    d = 30;
-
-    savedir = './results/';
-    
+    d = 30;    
     
     %% problem define
     problem.Mx = sympositivedefinitefactory(d);
@@ -33,8 +30,6 @@ function test_spd_logdet()
     end
     
     function h = hess(xy, xydot)
-        % hess.x = hess_x + D_y grad_x [ydot]
-        % hess.y = hess_y + D_x grad_y [xdot]
         x = xy.x;
         y = xy.y;
         xdot = xydot.x;
@@ -43,10 +38,6 @@ function test_spd_logdet()
         h.x = x .* trace( y \ ydot);
         h.y = y .* trace( x \ xdot);
     end
-    %}
-    %checkgradient(problem);
-    %checkhessian(problem);
-    %keyboard;
 
     xy0 = problem.M.rand();
 
@@ -156,9 +147,5 @@ function test_spd_logdet()
     lg.FontSize = 14;
     xlabel(ax,'Time (s)','FontSize',22);
     ylabel(ax,'Gradnorm','FontSize',22);
-    
-
-    pdf_print_code(h1, [savedir, 'spd_logdet_', 'iter']);
-    pdf_print_code(h2, [savedir, 'spd_logdet_', 'time']);
 
 end
