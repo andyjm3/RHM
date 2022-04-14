@@ -4,3 +4,5 @@ Code implementation of Riemannian Hamiltonian methods in the paper "Riemannian H
 Package requirements:
 1. ManOpt: https://github.com/NicolasBoumal/manopt (add the folder to the main directory)
 2. Geoopt: https://github.com/geoopt/geoopt
+
+If you find the code useful, please kindly cite the following paper:
