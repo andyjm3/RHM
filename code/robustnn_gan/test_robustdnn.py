@@ -303,21 +303,3 @@ if __name__ == '__main__':
         criterion = torch.nn.CrossEntropyLoss()
         optimizer = geoopt.optim.RiemannianSGD(model.parameters(), lr=lr_sgda)
         log_RSGDA_fix = RSGDArun(model, criterion, optimizer, train_loader, maxiter=maxiter)     
-
-
-
-
-        
-            
-                
-        
-        
-    
-
-
-
-
-
-
-
-
