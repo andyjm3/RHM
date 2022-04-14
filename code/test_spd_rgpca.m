@@ -69,7 +69,7 @@ function test_spd_rgpca()
         end
         grady = symm(2*logsum*y);
         g.y = (alpha/n) .* grady;
-        g.y = g.y -  y * (x*x') * y; % BM: okay 
+        g.y = g.y -  y * (x*x') * y; 
     end
 
 
@@ -99,9 +99,6 @@ function test_spd_rgpca()
         
         h.y = hessy + Dxgrady;
     end
-    %checkgradient(problem);
-    %checkhessian(problem);
-    %keyboard;
 
 
     xy0.x = problem.M.rand().x;
@@ -246,9 +243,5 @@ function test_spd_rgpca()
     lg.FontSize = 14;
     xlabel(ax,'Time (s)','FontSize',22);
     ylabel(ax,'Gradnorm','FontSize',22);
-    
-    pdf_print_code(h1, [savedir, 'rgpca_', 'iter_', strrep(num2str(alpha),'.','')]);
-    pdf_print_code(h2, [savedir, 'rgpca_', 'time_', strrep(num2str(alpha),'.','')]);
-    
 
 end
