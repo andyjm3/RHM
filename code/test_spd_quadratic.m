@@ -7,10 +7,7 @@ function test_spd_quadratic()
     rng(99);
     d = 30;
    
-    c = 0;
-
-    savedir = './results/';
-
+    c = 0.1; % 1
 
     %% problem define
     problem.Mx = sympositivedefinitefactory(d);
@@ -77,7 +74,6 @@ function test_spd_quadratic()
 
     
     %% c = 0.1/1 %%
-    %{
     % RHM-fixedstep
     optionsRHMsdf.stepsize = 0.2;
     optionsRHMsdf.gamma = 0;
@@ -120,101 +116,7 @@ function test_spd_quadratic()
     optionsRCEG.maxiter = maxiter;
     optionsRCEG.update = 'exp';
     [~,~,info_rceg,~] = rceg(problem, xy0, optionsRCEG);
-    %}
 
-
-
-    %% c = 10 %%
-    %{
-    % RHM-fixedstep
-    optionsRHMsdf.stepsize = 0.01;
-    optionsRHMsdf.gamma = 0;
-    optionsRHMsdf.method = 'RH-con-fixedstep';
-    optionsRHMsdf.maxiter = maxiter;
-    [~,~,info_rhg_sdf,~] = rhm(problemHGD, xy0, optionsRHMsdf);
-
-    % RHM-con-fixedstep
-    optionsRHMcon.stepsize = 0.01;
-    optionsRHMcon.gamma = 0.5;
-    optionsRHMcon.method = 'RH-con-fixedstep';
-    optionsRHMcon.maxiter = maxiter;
-    [~,~,info_rhg_con,~] = rhm(problemHGD, xy0, optionsRHMcon);
-    
-    % for RH + CG
-    optionsRHMsd.method = 'RH-SD';
-    optionsRHMsd.maxiter = maxiter;
-    [~,~,info_rhg_sd,~] = rhm(problemHGD, xy0, optionsRHMsd);
-
-    optionsRHMcg.method = 'RH-CG';
-    optionsRHMcg.maxiter = maxiter;
-    [~,~,info_rhg_cg,~] = rhm(problemHGD, xy0, optionsRHMcg);
-
-    optionsRHMtr.method = 'RH-TR';
-    optionsRHMtr.maxiter = maxiter_tr;
-    [~,~,info_rhg_tr,~] = rhm(problemHGD, xy0, optionsRHMtr);
-    
-    % RGDA
-    optionsGDA.stepsize = 0.02;
-    optionsGDA.maxiter = maxiter;
-    optionsGDA.update = 'exp';
-    [~,~,info_gda,~] = rgda(problem, xy0, optionsGDA);
-    
-     
-    % RCEG
-    optionsRCEG.stepsize = 0.08;
-    optionsRCEG.gamma = 1;
-    optionsRCEG.maxiter = maxiter;
-    optionsRCEG.update = 'exp';
-    [~,~,info_rceg,~] = rceg(problem, xy0, optionsRCEG);  
-    %keyboard;
-    %}
-
-    %% c = 0 %%
-    
-    % RHM-fixedstep
-    optionsRHMsdf.stepsize = 0.2;
-    optionsRHMsdf.gamma = 0;
-    optionsRHMsdf.method = 'RH-con-fixedstep';
-    optionsRHMsdf.maxiter = maxiter;
-    [~,~,info_rhg_sdf,~] = rhm(problemHGD, xy0, optionsRHMsdf);
-    
-    % RHM-con-fixedstep
-    optionsRHMcon.stepsize = 0.2;
-    optionsRHMcon.gamma = 0.5;
-    optionsRHMcon.method = 'RH-con-fixedstep';
-    optionsRHMcon.maxiter = maxiter;
-    [~,~,info_rhg_con,~] = rhm(problemHGD, xy0, optionsRHMcon);    
-
-    % for RH + CG
-    optionsRHMsd.method = 'RH-SD';
-    optionsRHMsd.maxiter = maxiter;
-    [~,~,info_rhg_sd,~] = rhm(problemHGD, xy0, optionsRHMsd);
-
-    optionsRHMcg.method = 'RH-CG';
-    optionsRHMcg.maxiter = maxiter;
-    [~,~,info_rhg_cg,~] = rhm(problemHGD, xy0, optionsRHMcg);
-
-    optionsRHMtr.method = 'RH-TR';
-    optionsRHMtr.maxiter = maxiter_tr;
-    [~,~,info_rhg_tr,~] = rhm(problemHGD, xy0, optionsRHMtr);
-    
-
-   
-    % RGDA
-    optionsGDA.stepsize = 0.5;
-    optionsGDA.maxiter = maxiter;
-    optionsGDA.update = 'exp';
-    [~,~,info_gda,~] = rgda(problem, xy0, optionsGDA);
-    
-    
-    
-    % RCEG
-    optionsRCEG.stepsize = 0.2;
-    optionsRCEG.maxiter = maxiter;
-    optionsRCEG.update = 'exp';
-    [~,~,info_rceg,~] = rceg(problem, xy0, optionsRCEG);    
-    %}
-    
        
     %% plots
     colors = {[55, 126, 184]/255, [228, 26, 28]/255, [247, 129, 191]/255, ...
@@ -258,10 +160,5 @@ function test_spd_quadratic()
     xlabel(ax,'Time (s)','FontSize',22);
     ylabel(ax,'Gradnorm','FontSize',22);
     
-    % save plots
-    pdf_print_code(h1, [savedir, 'spd_quadratic_', 'iter_', strrep(num2str(c),'.','')]);
-    pdf_print_code(h2, [savedir, 'spd_quadratic_', 'time_', strrep(num2str(c),'.','')]);
-
-
 end
 
